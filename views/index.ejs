@@ -1,0 +1,24 @@
+<%- include('header') %>
+
+<div class="d-flex flex-column align-items-center">
+  <div class="d-flex flex-wrap my-4 justify-content-center" id="card-container">
+    <% if (entries.length) { %> <% for (const entry of entries) { %>
+    <form method="get" action="/details">
+      <div class="card m-2" style="width: 18rem" id="<%= entry.id %>">
+        <div class="card-body">
+          <h5 class="card-title fs-4"><%= entry.title %></h5>
+          <h6 class="card-subtitle mt-1 mb-4 text-muted fs-6">
+            <%= entry.published %>
+          </h6>
+          <p class="card-text"><%= entry.content %></p>
+          <button type="submit" class="btn btn-primary">Detalhamento</a>
+        </div>
+      </div>
+    </form>
+    <% } %>
+  </div>
+  <% } else { %>
+  <p class="my-4">Sem mensagens! <a href="/new-entry">Adicione uma!</a></p>
+  <% } %>
+  <%- include('footer') %>
+</div>

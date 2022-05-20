@@ -1,0 +1,37 @@
+    <footer>
+      <% if (entries.length >= 1) { %> 
+        <h6 class="fs-4 my-4"><%= entries.length %> pessoa(s) deixaram uma mensagem <3</h6>
+      <% } %>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+    <script>
+      const cards = []
+  
+      const cardContainer = document.getElementById("card-container")
+  
+      for(let i of cardContainer.children) {
+        cards.push(i)
+      }
+
+      for(let i of cards) {
+        const body = i.children[0]
+        const card = body.children[0].children
+
+        const title = card[0].innerText
+        const subtitle = card[1].innerText
+        const content = card[2].innerText
+
+        card[3].addEventListener('click', (event) => {
+          // event.preventDefault()
+          const data = { title, subtitle, content}
+        
+          axios.post('/set-details', data).then(() => console.log("success"))
+          .catch(e => console.log('error', e))
+        })
+      }
+
+    </script>
+    </body>
+    </html>
