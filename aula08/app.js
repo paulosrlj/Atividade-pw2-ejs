@@ -31,8 +31,6 @@ class App {
         return;
       }
 
-      console.log(request.body);
-
       this.entries.push({
         title: request.body.title,
         content: request.body.body,
@@ -65,5 +63,5 @@ class App {
   }
 }
 
-const app = new App();
-app.app.listen(3000, () => console.log("Ouvindo na porta 3000"));
+const app = new App().app;
+app.listen(3000, () => console.log("Ouvindo na porta 3000"));
