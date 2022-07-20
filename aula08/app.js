@@ -4,8 +4,7 @@ const logger = require("morgan");
 const db = require("./config/db.config");
 const messageController = require("./controllers/message");
 
-await db.sync();
-
+// await db.sync();
 
 (async () =>{
   try {

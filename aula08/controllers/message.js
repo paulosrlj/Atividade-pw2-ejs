@@ -1,14 +1,14 @@
 const Message = require('../models/message');
 const db = require('../config/db.config');
 
-// exports.messageList = async() => {
-//     try {
-//         const mensagens = await db.message.findAll();
-//         return mensagens;
-//     } catch(err) {
-//         console.log(err);
-//     }
-// }
+exports.messageList = async() => {
+    try {
+        const mensagens = await db.message.findAll();
+        return mensagens;
+    } catch(err) {
+        console.log(err);
+    }
+}
 
 exports.getAll = async (req, res, next) => {
     try {
