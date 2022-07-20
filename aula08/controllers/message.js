@@ -1,76 +1,38 @@
-const Message = require('../models/message');
-const db = require('../config/db.config');
-
-exports.messageList = async() => {
-    try {
-        const mensagens = await db.message.findAll();
-        return mensagens;
-    } catch(err) {
-        console.log(err);
-    }
-}
+const db = require("../config/db.config");
 
 exports.getAll = async (req, res, next) => {
-    try {
-      const ALL = await Message.findAll();
-      return res.status(200).json(ALL);
-    } catch (error) {
-      return res.status(500).json(error);
-    }
-  };
-  
-  exports.getOne = async (req, res, next) => {
-    try {
-      const message = await Message.findByPk(req.params.id);
-      return res.status(200).json(message);
-    } catch (error) {
-      return res.status(500).json(error);
-    }
-  };
-  
-  exports.createOne = async (req, res, next) => {
-    try {
-      const MESSAGE_MODEL = {
-          title: req.body.title,
-          content: req.body.content,
-      };
-  
-      try {
-        const message = await Message.create(MESSAGE_MODEL);
-        console.log('Message crerated');
-        return res.status(201).json(Message);
-      } catch (error) {
-        return res.status(500).json(error);
-      }
-    } catch (error) {
-      return res.status(500).json(error);
-    }
-  };
-  
-  exports.updateOne = async (req, res, next) => {
-    try {
-      const MESSAGE_MODEL = {
-        title: req.body.title,
-        content: req.body.content,
-      };
-  
-      try {
-        const message = await Message.update(MESSAGE_MODEL, { where: { id: req.params.id } });
-        return res.status(200).json(message);
-      } catch (error) {}
-    } catch (error) {
-      return res.status(500).json(error);
-    }
-  };
-  
-  exports.deleteOne = async (req, res, next) => {
-    try {
-      const message = await Message.destroy({ where: { id: req.params.id } });
-      return res.status(200).json(message);
-    } catch (error) {
-      return res.status(500).json(error);
-    }
-  };
+  try {
+    const ALL = await db.message.findAll();
 
-//exports.getMessage = async(id) => {
-//};
+    return res.render("index", { entries: ALL });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json(error);
+  }
+};
+
+exports.newEntry = async (req, res, next) => {
+  try {
+    return res.render("new-entry");
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json(error);
+  }
+};
+
+exports.createOne = async (req, res, next) => {
+  try {
+    const MESSAGE_MODEL = {
+      title: req.body.title,
+      content: req.body.content,
+    };
+
+    await db.message.create(MESSAGE_MODEL);
+
+    console.log("Message created");
+    res.redirect("/");
+  } catch (error) {
+    return res.status(500).json(error);
+  }
+};
+
